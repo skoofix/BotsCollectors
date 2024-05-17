@@ -17,7 +17,8 @@ namespace Units.StateMachine
             {
                 new IdleState(this, unit, station),
                 new MoveToState(this, unit, station),
-                new PickupState(this,unit, station)
+                new PickupState(this,unit, station),
+                new UnloadState(this, unit, station)
             };
 
             _currentState = _states[0];

@@ -6,32 +6,34 @@ namespace Units.StateMachine.States
     public class MoveToState : MovementState
     {
         private Vector3 _target;
+        private bool _isReturnToSpawn;
         
-        public MoveToState(IStateSwitcher stateSwitcher, Unit unit, Station station) : base(stateSwitcher, unit, station)
-        {
-        }
+        public MoveToState(IStateSwitcher stateSwitcher, Unit unit, Station station) : base(stateSwitcher, unit, station) {}
 
         public override void Enter(Vector3 target)
         {
             base.Enter();
-            Debug.Log("Collecting State Enter");
+            Debug.Log("MoveTo State Enter");
             _target = target;
+            _isReturnToSpawn = _target == Unit.SpawnPosition;
         }
 
         public override void Exit()
         {
             base.Exit();
-            Debug.Log("CollectingStateExit");
-
+            Debug.Log("MoveTo State Exit");
         }
 
         public override void Update()
         {
             MoveTo(_target);
 
-            if (Mathf.Approximately(Unit.transform.position.magnitude, _target.magnitude))
+            if (Vector3.Distance(Unit.transform.position, _target) < 0.1f)
             {
-                StateSwitcher.SwitchState<PickupState>();
+                if (_isReturnToSpawn)
+                    StateSwitcher.SwitchState<UnloadState>();
+                else
+                    StateSwitcher.SwitchState<PickupState>();
             }
         }
 
@@ -39,6 +41,5 @@ namespace Units.StateMachine.States
         {
             Unit.transform.position = Vector3.MoveTowards(Unit.transform.position, target, 4f * Time.deltaTime);
         }
-        
     }
 }                                                                               

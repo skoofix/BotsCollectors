@@ -7,19 +7,21 @@ namespace Units.StateMachine.States
     {
         protected readonly IStateSwitcher StateSwitcher;
         protected readonly Unit Unit;
-        protected readonly Station _station;
+        protected readonly Station Station;
 
         protected MovementState(IStateSwitcher stateSwitcher, Unit unit, Station station)
         {
             StateSwitcher = stateSwitcher;
             Unit = unit;
-            _station = station;
+            Station = station;
         }
         
         public virtual void Enter() {}
-        public virtual void Enter(Vector3 target) {}
-        public virtual void Exit() {}
-        public virtual void Update() { }
         
+        public virtual void Enter(Vector3 target) {}
+        
+        public virtual void Exit() {}
+        
+        public virtual void Update() { }
     }
 }

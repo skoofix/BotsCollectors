@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Items;
 using UnityEngine;
 
@@ -6,14 +6,29 @@ namespace BaseScripts
 {
     public class Station : MonoBehaviour
     {
-        public event Action<Vector3> ItemFound;
 
-        private void Update()
+        [SerializeField] private StationScoreCounter _scoreCounter;
+        
+        private Queue<Vector3> _itemsPositions;
+
+        private void Awake() => _itemsPositions = new Queue<Vector3>();
+
+        private void Update() => ScanTerritory();
+
+        public void AddStationScore(int price) => _scoreCounter.AddScore(price);
+
+        public int GetStationScore() => _scoreCounter.Score;
+
+        public bool TryGetNextItem(out Vector3 itemPosition)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (_itemsPositions.Count > 0)
             {
-                ScanTerritory();
+                itemPosition = _itemsPositions.Dequeue();
+                return true;
             }
+
+            itemPosition = default;
+            return false;
         }
 
         private void ScanTerritory()
@@ -22,9 +37,10 @@ namespace BaseScripts
 
             foreach (var collider in hitColliders)
             {
-                if (collider.TryGetComponent(out Apple apple))
+                if (collider.TryGetComponent(out Apple apple) && apple.IsScanned == false)
                 {
-                    ItemFound?.Invoke(apple.transform.position);
+                    apple.Scanned();
+                    _itemsPositions.Enqueue(apple.transform.position);
                 }
             }
         }
