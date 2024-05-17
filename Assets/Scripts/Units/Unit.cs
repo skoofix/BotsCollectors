@@ -1,7 +1,6 @@
 ﻿using Units.StateMachine;
 using UnityEngine;
 using BaseScripts;
-using UnityEngine.Serialization;
 
 namespace Units
 {
@@ -9,10 +8,13 @@ namespace Units
     {
         [SerializeField] private Station _station;
         [SerializeField] private Transform _hand;
+        [SerializeField] private float _speed;
         
         private UnitStateMachine _stateMachine;
 
         public Transform Hand => _hand;
+        public float Speed => _speed;
+        
         public Vector3 SpawnPosition { get; private set; }
 
         private void Awake() => _stateMachine = new UnitStateMachine(this, _station);

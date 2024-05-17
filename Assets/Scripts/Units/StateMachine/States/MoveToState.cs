@@ -39,7 +39,7 @@ namespace Units.StateMachine.States
 
         private void MoveTo(Vector3 target)
         {
-            Unit.transform.position = Vector3.MoveTowards(Unit.transform.position, target, 4f * Time.deltaTime);
+            Unit.transform.position = Vector3.MoveTowards(Unit.transform.position, target, Unit.Speed * Time.deltaTime);
         }
     }
 }                                                                               
