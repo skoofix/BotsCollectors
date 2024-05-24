@@ -39,7 +39,8 @@ namespace StationScripts.StateMachine.States
 
         private void SetFlag(Vector3 position)
         {
-            Flag.SetPosition(position - new Vector3(0, 0.25f, 0));
+            var currentPosition = position - new Vector3(0, 0.25f, 0);
+            Flag.SetPosition(currentPosition);
             
             if(_flagSet == false)
             {
