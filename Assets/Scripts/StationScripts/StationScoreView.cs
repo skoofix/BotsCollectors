@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace BaseScripts
+namespace StationScripts
 {
     public class StationScoreView : MonoBehaviour
     {

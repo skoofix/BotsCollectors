@@ -28,19 +28,17 @@ namespace Items
         private void SetObject(Apple spawnableObject)
         {
             spawnableObject.ResetParams();
-            spawnableObject.gameObject.SetActive(true);
             spawnableObject.transform.position = _isRandomSpawnPosition ? GetRandomSpawnPosition() : _spawnPoint.position;
+            spawnableObject.gameObject.SetActive(true);
         }
 
         private Vector3 GetRandomSpawnPosition()
         {
-            float minValueX = -4;
-            float maxValueX = 4;
-            float minValueZ = -4.5f;
-            float maxValueZ = 0.5f;
+            float minValue = -7;
+            float maxValue = 7;
 
-            float distanceX = Random.Range(minValueX, maxValueX);
-            float distanceZ = Random.Range(minValueZ, maxValueZ);
+            float distanceX = Random.Range(minValue, maxValue);
+            float distanceZ = Random.Range(minValue, maxValue);
 
             return new Vector3(distanceX, 1f, distanceZ);
         }

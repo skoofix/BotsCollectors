@@ -1,32 +1,29 @@
-﻿using BaseScripts;
+﻿using StationScripts;
 using UnityEngine;
 
 namespace Units.StateMachine.States
 {
     public class IdleState : MovementState
     {
-        public IdleState(IStateSwitcher stateSwitcher, Unit unit, Station station) : base(stateSwitcher, unit, station) {}
-
-        public override void Enter()
-        {
-            base.Enter();
-            Debug.Log("Idle State Enter");
-        }
-
-        public override void Exit()
-        {
-            base.Exit();
-            Debug.Log("Idle State Exit");
-        }
+        public IdleState(IStateSwitcher<IState> stateSwitcher, Unit unit, Station station) : base(stateSwitcher, unit, station) {}
 
         public override void Update()
         {
             base.Update();
             
-            if (Station.TryGetNextItem(out Vector3 target))
+            if (Station.TryGetNextJob(out Vector3 target, out JobType jobType))
             {
-                StateSwitcher.SwitchState<MoveToState>(target);
+                switch (jobType)
+                {
+                    case JobType.CollectResource:
+                        StateSwitcher.SwitchState<PickupState>(target);
+                        break;
+                    case JobType.BuildBase:
+                        StateSwitcher.SwitchState<BuildState>(target);
+                        break;
+                }
             }
         }
+
     }
 }

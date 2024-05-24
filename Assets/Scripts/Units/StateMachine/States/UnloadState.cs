@@ -1,24 +1,24 @@
-﻿using BaseScripts;
-using Items;
+﻿using Items;
+using StationScripts;
 using UnityEngine;
 
 namespace Units.StateMachine.States
 {
     public class UnloadState : MovementState
     {
-        public UnloadState(IStateSwitcher stateSwitcher, Unit unit, Station station) : base(stateSwitcher, unit, station) {}
+        public UnloadState(IStateSwitcher<IState> stateSwitcher, Unit unit, Station station) : base(stateSwitcher, unit, station) {}
 
-        public override void Enter()
+        public override void Update()
         {
-            base.Enter();
-            Debug.Log("Unload State Enter");
-            DeliverItem();
-        }
+            base.Update();
+            
+            MoveTo(Target);
 
-        public override void Exit()
-        {
-            base.Exit();
-            Debug.Log("Unload State Exit");
+            if (HasReachedTarget())
+            {
+                DeliverItem();
+                StateSwitcher.SwitchState<IdleState>();
+            }
         }
 
         private void DeliverItem()
