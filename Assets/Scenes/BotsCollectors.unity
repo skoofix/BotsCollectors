@@ -953,11 +953,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d603c6ca9101419c9339a8dece25bfe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _capacity: 10
+  _capacity: 15
   _ObjectTemplates:
   - {fileID: -7927103295423639372, guid: 53a440911d2c3a54e980d8098965d99f, type: 3}
   _spawnPoint: {fileID: 2052244014}
-  _secnodsBetweenSpawn: 1
+  _secnodsBetweenSpawn: 0.6
   _isRandomSpawnPosition: 1
 --- !u!4 &2052244014
 Transform:
