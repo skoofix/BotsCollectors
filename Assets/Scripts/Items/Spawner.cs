@@ -27,7 +27,6 @@ namespace Items
 
         private void SetObject(Apple spawnableObject)
         {
-            spawnableObject.ResetParams();
             spawnableObject.transform.position = _isRandomSpawnPosition ? GetRandomSpawnPosition() : _spawnPoint.position;
             spawnableObject.gameObject.SetActive(true);
         }

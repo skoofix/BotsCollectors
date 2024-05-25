@@ -11,7 +11,7 @@ namespace Units.StateMachine.States
         public override void Update()
         {
             base.Update();
-            
+
             MoveTo(Target);
 
             if (HasReachedTarget())
@@ -25,10 +25,11 @@ namespace Units.StateMachine.States
         {
             if (Unit.Hand.childCount > 0)
             {
-                var item = Unit.Hand.GetChild(0);
-                SetNewItemParent(item);
-                AddScore(item);
-                item.gameObject.SetActive(false);
+                var apple = GetItemInHand();
+                SetNewItemParent(apple.transform);
+                AddScore(apple);
+                apple.transform.gameObject.SetActive(false);
+                Station.ReleaseObject(apple);
             }
 
             StateSwitcher.SwitchState<IdleState>();
@@ -36,10 +37,14 @@ namespace Units.StateMachine.States
 
         private void SetNewItemParent(Transform item) => item.SetParent(null);
 
-        private void AddScore(Transform item)
+        private void AddScore(Apple apple) => Station.AddStationScore(apple.Price);
+
+        private Apple GetItemInHand()
         {
-            if (item.TryGetComponent(out Apple apple))
-                Station.AddStationScore(apple.Price);
+            var item = Unit.Hand.GetChild(0);
+
+            return item.TryGetComponent(out Apple apple) ? apple : default;
         }
+
     }
 }
